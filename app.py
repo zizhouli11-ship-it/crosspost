@@ -40,6 +40,13 @@ class XCredsIn(BaseModel):
     access_token_secret: str
 
 
+class TiktokCredsIn(BaseModel):
+    access_token: str
+    refresh_token: str = ""
+    client_key: str = ""
+    client_secret: str = ""
+
+
 def _to_post(p: PostIn) -> Post:
     return Post(
         title=p.title, body=p.body,
@@ -83,6 +90,13 @@ def save_x_credentials(c: XCredsIn):
     """保存 X 的 API 密钥到本地 credentials.json(不进 git)。"""
     creds.set("x", c.model_dump())
     return {"platform": "x", "ready": publishers["x"].login_status()}
+
+
+@app.post("/api/credentials/tiktok")
+def save_tiktok_credentials(c: TiktokCredsIn):
+    """保存 TikTok 凭证(至少 access_token)到本地 credentials.json。"""
+    creds.set("tiktok", c.model_dump())
+    return {"platform": "tiktok", "ready": publishers["tiktok"].login_status()}
 
 
 @app.post("/api/youtube/authorize")

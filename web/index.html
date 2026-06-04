@@ -44,6 +44,23 @@
         <button id="auth_yt">连接 YouTube</button>
         <span id="yt_auth_msg" class="msg"></span>
       </div>
+      <div class="card">
+        <h2>TikTok 凭证</h2>
+        <p class="msg">未过审应用只能发到草稿箱(在 App 里完成发布)。
+          至少填 access_token;填了 refresh/client 信息可在过期时自动刷新。</p>
+        <label>Access Token<input id="tk_access_token" type="text"></label>
+        <label>Refresh Token(可选)<input id="tk_refresh_token" type="text"></label>
+        <label>Client Key(可选)<input id="tk_client_key" type="text"></label>
+        <label>Client Secret(可选)<input id="tk_client_secret" type="text"></label>
+        <button id="save_tk">保存 TikTok 凭证</button>
+        <span id="tk_save_msg" class="msg"></span>
+      </div>
+      <div class="card">
+        <h2>抖音(浏览器自动化)</h2>
+        <p class="msg">不需要密钥。用带远程调试端口的 Chrome 打开并登录抖音创作者后台
+          即可(和小红书同一个调试 Chrome,端口 9222)。抖音页面经常改版,首轮可能需要
+          配合调一次选择器。</p>
+      </div>
     </details>
   </main>
   <script src="/web/app.js"></script>

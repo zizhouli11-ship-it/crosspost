@@ -69,6 +69,21 @@ $("save_x").onclick = async () => {
   loadPlatforms();
 };
 
+$("save_tk").onclick = async () => {
+  $("tk_save_msg").textContent = "保存中…";
+  const res = await fetch("/api/credentials/tiktok", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      access_token: $("tk_access_token").value.trim(),
+      refresh_token: $("tk_refresh_token").value.trim(),
+      client_key: $("tk_client_key").value.trim(),
+      client_secret: $("tk_client_secret").value.trim(),
+    }),
+  }).then(r => r.json());
+  $("tk_save_msg").textContent = res.ready ? "已保存,TikTok 就绪" : "已保存,但缺 access_token";
+  loadPlatforms();
+};
+
 $("auth_yt").onclick = async () => {
   $("yt_auth_msg").textContent = "正在打开浏览器授权…";
   const res = await fetch("/api/youtube/authorize", { method: "POST" })
