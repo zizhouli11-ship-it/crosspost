@@ -1,0 +1,57 @@
+const $ = (id) => document.getElementById(id);
+
+function buildPost() {
+  const tags = $("tags").value.split(",").map(s => s.trim()).filter(Boolean);
+  const media = $("media").value.split("\n").map(s => s.trim()).filter(Boolean)
+    .map(path => ({
+      path,
+      type: /\.(mp4|mov|avi|mkv|webm)$/i.test(path) ? "video" : "image",
+    }));
+  return { title: $("title").value, body: $("body").value, tags, media, overrides: {} };
+}
+
+function selectedPlatforms() {
+  return [...document.querySelectorAll(".pf:checked")].map(c => c.value);
+}
+
+async function loadPlatforms() {
+  const res = await fetch("/api/platforms").then(r => r.json());
+  $("platforms").innerHTML = res.map(p => `
+    <label class="pf-row">
+      <input class="pf" type="checkbox" value="${p.platform}" checked>
+      ${p.platform}
+      <span class="${p.ready ? "ok" : "warn"}">
+        ${p.ready ? "就绪" : "未连接/未登录"}
+      </span>
+    </label>`).join("");
+}
+
+function renderRows(rows) {
+  $("results").innerHTML = rows.map(r => `
+    <div class="result ${r.status}">
+      <strong>${r.platform}</strong>
+      <span>${r.status}</span>
+      ${r.url ? `<a href="${r.url}" target="_blank">查看</a>` : ""}
+      <span class="msg">${r.message || ""}</span>
+    </div>`).join("");
+}
+
+$("validate").onclick = async () => {
+  const out = await fetch("/api/validate", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(buildPost()),
+  }).then(r => r.json());
+  renderRows(Object.entries(out).map(([platform, v]) =>
+    ({ platform, status: v.status, message: v.message })));
+};
+
+$("publish").onclick = async () => {
+  $("results").innerHTML = "发布中…";
+  const out = await fetch("/api/publish", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ post: buildPost(), platforms: selectedPlatforms() }),
+  }).then(r => r.json());
+  renderRows(out);
+};
+
+loadPlatforms();

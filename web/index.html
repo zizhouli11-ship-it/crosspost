@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>跨平台发布</title>
+  <link rel="stylesheet" href="/web/style.css">
+</head>
+<body>
+  <main>
+    <h1>跨平台发布</h1>
+    <label>标题<input id="title" type="text"></label>
+    <label>正文<textarea id="body" rows="6"></textarea></label>
+    <label>标签(逗号分隔)<input id="tags" type="text" placeholder="AI, 出海"></label>
+    <label>媒体文件路径(每行一个本地路径)
+      <textarea id="media" rows="3"
+        placeholder="C:\path\a.jpg&#10;C:\path\v.mp4"></textarea>
+    </label>
+    <fieldset>
+      <legend>平台</legend>
+      <div id="platforms"></div>
+    </fieldset>
+    <div class="actions">
+      <button id="validate">校验</button>
+      <button id="publish">发布</button>
+    </div>
+    <section id="results"></section>
+  </main>
+  <script src="/web/app.js"></script>
+</body>
+</html>
