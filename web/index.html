@@ -25,6 +25,26 @@
       <button id="publish">发布</button>
     </div>
     <section id="results"></section>
+
+    <details class="settings">
+      <summary>设置 / 连接账号</summary>
+      <div class="card">
+        <h2>X (Twitter) API 密钥</h2>
+        <label>API Key<input id="x_api_key" type="text"></label>
+        <label>API Secret<input id="x_api_secret" type="text"></label>
+        <label>Access Token<input id="x_access_token" type="text"></label>
+        <label>Access Token Secret<input id="x_access_token_secret" type="text"></label>
+        <button id="save_x">保存 X 密钥</button>
+        <span id="x_save_msg" class="msg"></span>
+      </div>
+      <div class="card">
+        <h2>YouTube 授权</h2>
+        <p class="msg">先把 Google 下载的 client secret 放到
+          config/youtube_client_secret.json,再点下面按钮(会打开浏览器授权)。</p>
+        <button id="auth_yt">连接 YouTube</button>
+        <span id="yt_auth_msg" class="msg"></span>
+      </div>
+    </details>
   </main>
   <script src="/web/app.js"></script>
 </body>

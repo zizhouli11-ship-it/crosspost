@@ -33,6 +33,13 @@ class PublishIn(BaseModel):
     platforms: List[str]
 
 
+class XCredsIn(BaseModel):
+    api_key: str
+    api_secret: str
+    access_token: str
+    access_token_secret: str
+
+
 def _to_post(p: PostIn) -> Post:
     return Post(
         title=p.title, body=p.body,
@@ -69,6 +76,29 @@ def publish(req: PublishIn):
     post = _to_post(req.post)
     results = publish_all(post, req.platforms, publishers, adapters)
     return [vars(r) for r in results]
+
+
+@app.post("/api/credentials/x")
+def save_x_credentials(c: XCredsIn):
+    """保存 X 的 API 密钥到本地 credentials.json(不进 git)。"""
+    creds.set("x", c.model_dump())
+    return {"platform": "x", "ready": publishers["x"].login_status()}
+
+
+@app.post("/api/youtube/authorize")
+def youtube_authorize():
+    """触发 YouTube OAuth:打开本地浏览器走授权,成功后写入 token。
+    需要先把 Google 下载的 client secret 放到 config/youtube_client_secret.json。
+    """
+    try:
+        publishers["youtube"].authorize()
+    except FileNotFoundError:
+        return {"ok": False,
+                "message": "缺少 config/youtube_client_secret.json,"
+                           "请先从 Google Cloud Console 下载放入该位置"}
+    except Exception as e:  # noqa: BLE001
+        return {"ok": False, "message": f"授权失败: {e}"}
+    return {"ok": True, "ready": publishers["youtube"].login_status()}
 
 
 app.mount("/web", StaticFiles(directory=WEB), name="web")

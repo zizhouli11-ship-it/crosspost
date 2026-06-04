@@ -29,6 +29,7 @@ class XPublisher:
     def _upload_image(self, session, path: str) -> str:
         with open(path, "rb") as fh:
             resp = session.post(UPLOAD_URL, files={"media": fh})
+        resp.raise_for_status()
         resp_json = resp.json()
         return str(resp_json["media_id_string"])
 

@@ -54,4 +54,27 @@ $("publish").onclick = async () => {
   renderRows(out);
 };
 
+$("save_x").onclick = async () => {
+  $("x_save_msg").textContent = "保存中…";
+  const res = await fetch("/api/credentials/x", {
+    method: "POST", headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      api_key: $("x_api_key").value.trim(),
+      api_secret: $("x_api_secret").value.trim(),
+      access_token: $("x_access_token").value.trim(),
+      access_token_secret: $("x_access_token_secret").value.trim(),
+    }),
+  }).then(r => r.json());
+  $("x_save_msg").textContent = res.ready ? "已保存,X 就绪" : "已保存,但凭证不完整";
+  loadPlatforms();
+};
+
+$("auth_yt").onclick = async () => {
+  $("yt_auth_msg").textContent = "正在打开浏览器授权…";
+  const res = await fetch("/api/youtube/authorize", { method: "POST" })
+    .then(r => r.json());
+  $("yt_auth_msg").textContent = res.ok ? "YouTube 已授权" : (res.message || "授权失败");
+  loadPlatforms();
+};
+
 loadPlatforms();

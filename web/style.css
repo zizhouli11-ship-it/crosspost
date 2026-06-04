@@ -22,3 +22,8 @@ button:hover { background: #333; }
 .result.needs_login, .result.warn { border-left-color: #ef6c00; }
 .ok { color: #2e7d32; } .warn { color: #ef6c00; }
 .msg { color: #6e6e73; font-size: 13px; }
+.settings { margin-top: 24px; }
+.settings summary { cursor: pointer; font-size: 14px; }
+.settings .card { background: #fff; border: 1px solid #d2d2d7;
+  border-radius: 10px; padding: 16px; margin: 12px 0; }
+.settings h2 { font-size: 15px; margin: 0 0 8px; }
