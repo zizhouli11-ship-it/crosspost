@@ -17,11 +17,11 @@ function selectedPlatforms() {
 async function loadPlatforms() {
   const res = await fetch("/api/platforms").then(r => r.json());
   $("platforms").innerHTML = res.map(p => `
-    <label class="pf-row">
+    <label class="pf-chip">
       <input class="pf" type="checkbox" value="${p.platform}" checked>
-      ${p.platform}
-      <span class="${p.ready ? "ok" : "warn"}">
-        ${p.ready ? "就绪" : "未连接/未登录"}
+      <span class="pf-name">${p.platform}</span>
+      <span class="pf-status ${p.ready ? "is-ready" : "is-off"}">
+        ${p.ready ? "就绪" : "未连接"}
       </span>
     </label>`).join("");
 }
@@ -30,8 +30,8 @@ function renderRows(rows) {
   $("results").innerHTML = rows.map(r => `
     <div class="result ${r.status}">
       <strong>${r.platform}</strong>
-      <span>${r.status}</span>
-      ${r.url ? `<a href="${r.url}" target="_blank">查看</a>` : ""}
+      <span class="pill">${r.status}</span>
+      ${r.url ? `<a href="${r.url}" target="_blank">查看 ↗</a>` : ""}
       <span class="msg">${r.message || ""}</span>
     </div>`).join("");
 }
@@ -46,7 +46,7 @@ $("validate").onclick = async () => {
 };
 
 $("publish").onclick = async () => {
-  $("results").innerHTML = "发布中…";
+  $("results").innerHTML = `<p class="results-placeholder">发布中…</p>`;
   const out = await fetch("/api/publish", {
     method: "POST", headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ post: buildPost(), platforms: selectedPlatforms() }),

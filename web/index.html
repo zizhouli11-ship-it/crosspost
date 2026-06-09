@@ -3,26 +3,42 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>跨平台发布</title>
+  <title>crosspost · 跨平台发布</title>
   <link rel="stylesheet" href="/web/style.css">
 </head>
 <body>
   <main>
-    <h1>跨平台发布</h1>
-    <label>标题<input id="title" type="text"></label>
-    <label>正文<textarea id="body" rows="6"></textarea></label>
-    <label>标签(逗号分隔)<input id="tags" type="text" placeholder="AI, 出海"></label>
-    <label>媒体文件路径(每行一个本地路径)
-      <textarea id="media" rows="3"
-        placeholder="C:\path\a.jpg&#10;C:\path\v.mp4"></textarea>
-    </label>
-    <fieldset>
-      <legend>平台</legend>
-      <div id="platforms"></div>
-    </fieldset>
+    <header class="app-header">
+      <div class="logo" aria-hidden="true"></div>
+      <div>
+        <h1>crosspost</h1>
+        <p class="tagline">一份内容,一键发到所有平台</p>
+      </div>
+    </header>
+    <div class="badge-row">
+      <span class="badge"><span class="dot"></span>本地运行 · 凭证不出本机</span>
+      <span class="badge">小红书 · X · YouTube · 抖音 · TikTok</span>
+    </div>
+
+    <section class="panel">
+      <p class="panel-title">内容</p>
+      <label>标题<input id="title" type="text" placeholder="一句话标题"></label>
+      <label>正文<textarea id="body" rows="6" placeholder="写一次,处处发布…"></textarea></label>
+      <label>标签(逗号分隔)<input id="tags" type="text" placeholder="AI, 出海, 效率"></label>
+      <label>媒体文件路径(每行一个本地路径)
+        <textarea id="media" rows="3"
+          placeholder="C:\path\a.jpg&#10;C:\path\v.mp4"></textarea>
+      </label>
+    </section>
+
+    <section class="panel">
+      <p class="panel-title">发布平台</p>
+      <div id="platforms" class="pf-grid"></div>
+    </section>
+
     <div class="actions">
-      <button id="validate">校验</button>
-      <button id="publish">发布</button>
+      <button id="validate" class="btn-ghost">校验</button>
+      <button id="publish" class="btn-primary">发布</button>
     </div>
     <section id="results"></section>
 
@@ -34,14 +50,14 @@
         <label>API Secret<input id="x_api_secret" type="text"></label>
         <label>Access Token<input id="x_access_token" type="text"></label>
         <label>Access Token Secret<input id="x_access_token_secret" type="text"></label>
-        <button id="save_x">保存 X 密钥</button>
+        <button id="save_x" class="btn-ghost">保存 X 密钥</button>
         <span id="x_save_msg" class="msg"></span>
       </div>
       <div class="card">
         <h2>YouTube 授权</h2>
         <p class="msg">先把 Google 下载的 client secret 放到
           config/youtube_client_secret.json,再点下面按钮(会打开浏览器授权)。</p>
-        <button id="auth_yt">连接 YouTube</button>
+        <button id="auth_yt" class="btn-ghost">连接 YouTube</button>
         <span id="yt_auth_msg" class="msg"></span>
       </div>
       <div class="card">
@@ -52,7 +68,7 @@
         <label>Refresh Token(可选)<input id="tk_refresh_token" type="text"></label>
         <label>Client Key(可选)<input id="tk_client_key" type="text"></label>
         <label>Client Secret(可选)<input id="tk_client_secret" type="text"></label>
-        <button id="save_tk">保存 TikTok 凭证</button>
+        <button id="save_tk" class="btn-ghost">保存 TikTok 凭证</button>
         <span id="tk_save_msg" class="msg"></span>
       </div>
       <div class="card">

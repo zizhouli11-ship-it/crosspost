@@ -4,6 +4,8 @@
 
 **Write once, publish everywhere.** `crosspost` takes a single post (text+images or video) and pushes it to Xiaohongshu (RED), X (Twitter), YouTube, Douyin and TikTok — mixing official APIs and browser automation so it works even on platforms without a public posting API. Everything runs locally; your credentials never leave your machine.
 
+![crosspost local panel](docs/screenshot.png)
+
 | Platform | Engine | Content |
 |---|---|---|
 | Xiaohongshu (RED) | Browser automation (CDP) | image + video |
