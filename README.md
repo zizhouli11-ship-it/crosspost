@@ -1,3 +1,40 @@
+# crosspost
+
+> One piece of content → auto-adapted for every platform → published in one click, with per-platform results in a local web panel.
+
+**Write once, publish everywhere.** `crosspost` takes a single post (text+images or video) and pushes it to Xiaohongshu (RED), X (Twitter), YouTube, Douyin and TikTok — mixing official APIs and browser automation so it works even on platforms without a public posting API. Everything runs locally; your credentials never leave your machine.
+
+| Platform | Engine | Content |
+|---|---|---|
+| Xiaohongshu (RED) | Browser automation (CDP) | image + video |
+| X (Twitter) | Official API | image |
+| YouTube | Official API | video |
+| Douyin | Browser automation (CDP) | video |
+| TikTok | Official API (draft inbox) | video |
+
+**Highlights**
+- 5 platforms, 2 engines (official API + browser automation), 2 content types out of the box
+- Local-first: credentials stay in `config/credentials.json` (gitignored), nothing is uploaded
+- Per-platform result panel: one failure never blocks the others; each result carries a link or a reason
+- Pluggable: add a platform by dropping an `adapter` + `publisher` and registering it — see `docs/specs/`
+- 48 unit tests, all green
+
+**Quick start**
+```bash
+git clone https://github.com/<your-handle>/crosspost.git
+cd crosspost
+python -m venv .venv && .venv/Scripts/python -m pip install -r requirements.txt
+.venv/Scripts/python -m uvicorn app:app --port 8765
+# open http://127.0.0.1:8765
+```
+On Windows you can just double-click `run.bat`. Full per-platform setup (API keys, OAuth, CDP login) is documented below.
+
+> ⚠️ Use responsibly and within each platform's Terms of Service. Browser-automation flows drive *your own* logged-in account; you are responsible for how you use them.
+
+---
+
+## 中文说明
+
 # crosspost — 跨平台内容发布工具(MVP)
 
 一份内容(图文/视频)→ 自动适配各平台 → 一键发布,并在本地网页面板看每个平台的发布结果。
