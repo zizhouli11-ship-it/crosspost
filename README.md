@@ -1,6 +1,7 @@
-# crosspost
+# crosspost · 跨平台内容一键发布 / Cross-platform one-click publisher
 
 > One piece of content → auto-adapted for every platform → published in one click, with per-platform results in a local web panel.
+> 一份内容,自动适配每个平台,一键发布,本地面板看到每个平台的结果。
 
 **Write once, publish everywhere.** `crosspost` takes a single post (text+images or video) and pushes it to Xiaohongshu (RED), X (Twitter), YouTube, Douyin and TikTok — mixing official APIs and browser automation so it works even on platforms without a public posting API. Everything runs locally; your credentials never leave your machine.
 
@@ -23,7 +24,7 @@
 
 **Quick start**
 ```bash
-git clone https://github.com/<your-handle>/crosspost.git
+git clone https://github.com/zizhouli11-ship-it/crosspost.git
 cd crosspost
 python -m venv .venv && .venv/Scripts/python -m pip install -r requirements.txt
 .venv/Scripts/python -m uvicorn app:app --port 8765
@@ -56,7 +57,7 @@ On Windows you can just double-click `run.bat`. Full per-platform setup (API key
 双击 `run.bat`(会自动清代理、起服务、打开浏览器),或手动:
 
 ```
-cd C:\Users\30488\crosspost
+cd crosspost
 .venv\Scripts\python.exe -m uvicorn app:app --port 8765
 ```
 
@@ -79,12 +80,12 @@ cd C:\Users\30488\crosspost
 - 48 个单元测试全绿:数据模型、五个平台适配与校验、凭证存储、编排器隔离、各发布器(API 调用以 mock 验证请求构造,CDP 客户端以 fake socket 验证消息收发)。
 - 服务端 HTTP 冒烟:`/api/platforms`(列出 5 平台)、`/api/validate`(带视频→ 五平台均 ok;纯文字→ 视频类平台 skip)、`/api/credentials/x`、`/api/credentials/tiktok`(保存后由未连接→就绪)均符合预期。
 
-## 待你做真实发布验证(需要真实登录态/密钥,我无法代做)
+## 真实发布验证清单(需要真实登录态 / 密钥)
 
 1. 小红书图文 + 视频各发一次。
 2. X 配好密钥后发一条图文。
 3. YouTube 授权后传一个视频。
-4. **抖音**:开着已登录的调试 Chrome,先跑一次 probe 确认能连上、再发一个视频(大概率要一起调一轮选择器)。
+4. **抖音**:开着已登录的调试 Chrome,先跑一次 probe 确认能连上、再发一个视频(大概率需要调一轮选择器)。
 5. **TikTok**:填好 access_token 后传一个视频到草稿箱,在 App 里确认。
 6. 多平台合并发布:任一失败不影响其他,结果分别带链接/原因。
 
